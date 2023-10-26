@@ -1,0 +1,243 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
+#question h3,
+.color h3,
+.price h3 {
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+  padding: 30px;
+}
+
+.step {
+  display: none;
+  margin-bottom: 15px;
+}
+
+.step.active {
+  display: block;
+}
+
+#steps {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.step-controls {
+  display: flex;
+  flex-direction: row;
+  gap: 260px;
+  margin: 80px 0 30px 0;
+}
+
+.backButton,
+.nextButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#backButton,
+#nextButton {
+  padding: 20px 30px;
+  border: 1px solid black;
+  border-radius: 25px;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#backButton:hover,
+#nextButton:hover {
+  background-color: #808080;
+  color: #fff;
+}
+
+#backButton:active,
+#nextButton:active {
+  background-color: black;
+  color: #fff;
+}
+
+#categoryForm {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+#dresses,
+#clothing,
+#accessories {
+  padding: 15px;
+  border: 1px solid #000;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+#categoryForm input:hover {
+  color: #fff;
+  background-color: #808080;
+}
+
+#categoryForm input:active {
+  color: #fff;
+  background-color: #000;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.dot {
+  width: 40px;
+  height: 5px;
+  background-color: #ccc;
+  border-radius: 10px;
+  display: inline-block;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+#priceForm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-around;
+}
+
+#price {
+  flex-basis: 45%;
+  padding: 15px;
+  border: 1px solid #000;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+#price:hover {
+  color: #fff;
+  background-color: #808080;
+}
+
+#price:active {
+  color: #fff;
+  background-color: #000;
+}
+
+#inputRadio {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #0044cc;
+  background-color: #ccddff;
+  color: #003366;
+}
+
+#color-buttons-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.color-button {
+  width: 40px;
+  height: 40px;
+  margin: 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 30px;
+  position: relative;
+  background-clip: padding-box;
+  transition: transform 0.3s ease;
+}
+
+.color-button:hover {
+  transform: scale(1.2);
+}
+
+/* product.css */
+.containerProduct {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
+#product {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+#viewProduct {
+  padding: 13px 80px;
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+  border: 1px solid #000;
+  border-radius: 20px;
+}
+
+#viewProduct:hover {
+  color: #fff;
+  background-color: #808080;
+}
+
+#viewProduct:active {
+  color: #000;
+  background-color: #fff;
+}
+
+.title {
+  margin-bottom: 15px;
+}
+
+.dotsProduct {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.dotProduct {
+  width: 24px;
+  height: 3px;
+  background-color: #ccc;
+  border-radius: 10px;
+  display: inline-block;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+#backButtonProduct,
+#nextButtonProduct {
+  font-size: large;
+  padding: 20px 30px;
+  border: none;
+  color: black;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product File</title>
+    <script src="/product.js"></script>
+    <link rel="stylesheet" href="/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="containerProduct">
+      <div id="product">
+        <div id="step-controlsProduct">
+          <button id="backButtonProduct" onclick="changeStep(-1)">
+            <i class="fas fa-arrow-left"></i>
+          </button>
+        </div>
+
+        <div id="productInfo">
+          <div id="imageProduct">
+            <img src="https://picsum.photos/400/600" alt="product-image" />
+          </div>
+
+          <div class="title">
+            <h3>NORAH DITSY FLORAL PRINT MAXI DRESS IN GREEN</h3>
+            <h4>€59.95</h4>
+            <h4 style="color: red">€29.98</h4>
+          </div>
+          <div class="viewProduct">
+            <button id="viewProduct">VIEW PRODUCT</button>
+          </div>
+        </div>
+        <div id="step-controls">
+          <button id="nextButtonProduct" onclick="changeStep(1)">
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="dotsProduct">
+        <span class="dotProduct"> </span>
+        <span class="dotProduct"> </span>
+        <span class="dotProduct"> </span>
+        <span class="dotProduct"> </span>
+        <span class="dotProduct"> </span>
+        <span class="dotProduct"> </span>
+        <span class="dotProduct"> </span>
+        <span class="dotProduct"> </span>
+        <span class="dotProduct"> </span>
+        <span class="dotProduct"> </span>
+        <span class="dotProduct"> </span>
+        <span class="dotProduct"> </span>
+      </div>
+    </div>
+  </body>
+</html>
