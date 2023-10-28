@@ -152,7 +152,7 @@ body {
   color: #003366;
 }
 
-#color-buttons-container {
+#colorForm {
   display: flex;
   flex-direction: row;
   gap: 1px;

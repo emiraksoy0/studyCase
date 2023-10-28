@@ -13,47 +13,16 @@
   </head>
   <body>
     <div class="containerProduct">
+      <!-- //product.js dosyasına taşınacak burası. for ile dönülecek yani  -->
       <div id="product">
-        <div id="step-controlsProduct">
-          <button id="backButtonProduct" onclick="changeStep(-1)">
-            <i class="fas fa-arrow-left"></i>
-          </button>
-        </div>
+        <div class="productInfo">
+          <div id="imageProduct"></div>
 
-        <div id="productInfo">
-          <div id="imageProduct">
-            <img src="https://picsum.photos/400/600" alt="product-image" />
-          </div>
-
-          <div class="title">
-            <h3>NORAH DITSY FLORAL PRINT MAXI DRESS IN GREEN</h3>
-            <h4>€59.95</h4>
-            <h4 style="color: red">€29.98</h4>
-          </div>
+          <div id="title" class="title"></div>
           <div class="viewProduct">
             <button id="viewProduct">VIEW PRODUCT</button>
           </div>
         </div>
-        <div id="step-controls">
-          <button id="nextButtonProduct" onclick="changeStep(1)">
-            <i class="fas fa-arrow-right"></i>
-          </button>
-        </div>
-      </div>
-
-      <div class="dotsProduct">
-        <span class="dotProduct"> </span>
-        <span class="dotProduct"> </span>
-        <span class="dotProduct"> </span>
-        <span class="dotProduct"> </span>
-        <span class="dotProduct"> </span>
-        <span class="dotProduct"> </span>
-        <span class="dotProduct"> </span>
-        <span class="dotProduct"> </span>
-        <span class="dotProduct"> </span>
-        <span class="dotProduct"> </span>
-        <span class="dotProduct"> </span>
-        <span class="dotProduct"> </span>
       </div>
     </div>
   </body>

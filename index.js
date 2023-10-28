@@ -21,5 +21,5 @@ function changeStep(increment) {
 
 document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('step1').classList.add('active')
-  document.getElementById('dot1').classList.add('active-dot')
+  //document.getElementById('dot1').classList.add('active-dot')
 })
