@@ -27,8 +27,35 @@ body {
 }
 
 .step {
-  display: none;
   margin-bottom: 15px;
+}
+.none {
+  display: none;
+}
+
+.bg-brown {
+  background-color: brown;
+}
+.bg-beige {
+  background-color: beige;
+}
+.bg-blue {
+  background-color: blue;
+}
+.bg-black {
+  background-color: black;
+}
+.bg-green {
+  background-color: green;
+}
+.bg-red {
+  background-color: red;
+}
+.bg-navy {
+  background-color: navy;
+}
+.bg-cream {
+  background-color: coral;
 }
 
 .step.active {
@@ -90,6 +117,11 @@ body {
   border: 1px solid #000;
   border-radius: 20px;
   cursor: pointer;
+}
+
+.active-button {
+  background-color: black;
+  color: white;
 }
 
 #categoryForm input:hover {
@@ -158,6 +190,10 @@ body {
   gap: 1px;
   margin-top: 20px;
   justify-content: center;
+}
+
+.text-red {
+  color: red;
 }
 
 .color-button {
