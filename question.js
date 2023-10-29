@@ -21,6 +21,9 @@ fetch('./json/questions.json')
 let selectedCategoryValue = null
 let selectedColorValue = null
 let selectedPriceValue = null
+let step = 0
+let currentCategorySteps = null
+document.location.search !=="" ? document.location.search ="" : ""
 
 function initializeWithFetchedData(fetchedData) {
   let categoryForm = '<form id="categoryForm">'
@@ -55,16 +58,14 @@ function initializeWithFetchedData(fetchedData) {
       })
   })
 }
-let step = 0
-let currentCategorySteps = null
+
 
 function displayStepsForCategory(category) {
   currentCategorySteps = category.steps
   step = step + 1
-  step > 2 ? console.log("/product'a yönlendirilmeli. ") : updateStep()
+  step > 2 ? console.log("index.js'te yönlendirme sağlanıyor.") : updateStep()
 }
 function updateStep() {
-  console.log('updatestap' + step)
 
   // Eğer step 0'dan küçük veya currentCategorySteps'in uzunluğundan büyükse dön
   if (step < 0 || step >= step.length) return
@@ -76,62 +77,24 @@ function updateStep() {
   let formContent = ''
   let idType = stepData.type
 
-  if (stepData.type === 'color') {
-    stepData.answers.forEach((answer) => {
-      // Metni düşük harfe çevir ve CSS sınıf isimlendirmesi için kullan
-      let colorClass = `bg-${answer.toLowerCase()}`
-      formContent += `<button type="checkbox" value="${answer}" id="${idType}" class="color-button ${colorClass} "></button>`
-    })
-  }
 
   if (stepData.type === 'price') {
     stepData.answers.forEach((answer) => {
       formContent += `<button type="checkbox" value="${answer}" id="${idType}">€${answer}</button>` // Her bir değerin sonuna '€' işareti ekleniyor.
     })
   } else {
-    stepData.answers.forEach((answer) => {
-      formContent += `<button type="checkbox" value="${answer}" id="${idType}">${answer}</button>`
-    })
+      // Metni düşük harfe çevir ve CSS sınıf isimlendirmesi için kullan
+      stepData.answers.forEach((answer) => {
+        let colorClass = `bg-${answer.toLowerCase()}`
+        formContent += `<button type="checkbox" value="${answer}" id="${idType}" class="color-button ${colorClass} "></button>`
+      })
   }
   stepElem.querySelector(`#form${step + 1}`).innerHTML = formContent
 
   const colorElements = document.querySelectorAll('#color')
-
-  colorElements.forEach((element) => {
+  colorElements.forEach((element) => { 
     element.addEventListener('click', function (event) {
       event.preventDefault()
-      const colorText = element.innerText.toLowerCase()
-      element.className = ''
-
-      switch (colorText) {
-        case 'beige':
-          element.classList.add('bg-beige')
-          break
-        case 'blue':
-          element.classList.add('bg-blue')
-          break
-        case 'brown':
-          element.classList.add('bg-brown')
-          break
-        case 'black':
-          element.classList.add('bg-black')
-          break
-        case 'green':
-          element.classList.add('bg-green')
-          break
-        case 'red':
-          element.classList.add('bg-red')
-          break
-        case 'cream':
-          element.classList.add('bg-cream')
-          break
-        case 'navy':
-          element.classList.add('bg-navy')
-          break
-        default:
-          console.log('Unknown color:', colorText)
-          break
-      }
       selectedColorValue = event.target.value
       console.log(selectedColorValue)
     })
@@ -148,31 +111,43 @@ function updateStep() {
 }
 
 function changeStep(direction) {
-  window.history.pushState({}, '', '?category=' + selectedCategoryValue)
-  if (selectedColorValue !== null) {
-    let currentURL = window.location.href
-    let separator = currentURL.includes('?') ? '&' : '?'
-    window.history.pushState(
-      {},
-      '',
-      currentURL + separator + 'color=' + selectedColorValue
-    )
-  }
-  if (selectedPriceValue !== null) {
-    let currentURL = window.location.href
-    let separator = currentURL.includes('?') ? '&' : '?'
-    window.history.pushState(
-      {},
-      '',
-      currentURL + separator + 'price=' + selectedPriceValue
-    )
-  }
+  if(selectedCategoryValue === null){
+    alert("Kategori seçiminizi yapınız!")
+  }else if (step=== 1 && selectedColorValue === null){
+    alert("Color seçiminizi yapınız!")
+  }else if(step=== 2 &&  selectedPriceValue === null){
+    alert("Price seçiminizi yapınız!")
 
-  const step1Data = questionData.find(
-    (item) => item.name === selectedCategoryValue
-  )
-  console.log(step)
-  displayStepsForCategory(step1Data)
+  }else{
+     window.history.pushState({}, '', '?category=' + selectedCategoryValue);
+    if (selectedColorValue !== null) {
+      let currentURL = window.location.href
+      let separator = currentURL.includes('?') ? '&' : '?'
+      window.history.pushState(
+        {},
+        '',
+        currentURL + separator + 'color=' + selectedColorValue
+      )
+    };
+    if (selectedPriceValue !== null) {
+      let currentURL = window.location.href
+      let separator = currentURL.includes('?') ? '&' : '?'
+      window.history.pushState(
+        {},
+        '',
+        currentURL + separator + 'price=' + selectedPriceValue
+      )
+    };
+
+    const step1Data = questionData.find(
+      (item) => item.name === selectedCategoryValue
+    );
+    console.log(step);
+    displayStepsForCategory(step1Data);
+    
+  }
+ 
+  
 }
 
 //-----------------------------------

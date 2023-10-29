@@ -18,8 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function generateStepContent() {
     // Based on the current step and previous selections, generate the appropriate content
     // For example, if on step 2, use the 'category' selection to determine what colors to show
-
-    if (currentStep === 1) {
+    if (currentStep === 1 && selectedColorValue !== null) {
       // assuming 0-index, this is step 2
       const colors = getColorsForCategory(selections.category) // define this function to return an array of colors based on the category
       // Add these colors to the form, e.g., by creating buttons or other input elements as needed
@@ -39,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         form.appendChild(button)
       })
-    } else if (currentStep === 2) {
+    } else if (currentStep === 2 && selectedPriceValue !== null) {
       // this is step 3
       // Similar to above, use the selections to determine what content to generate
       // For example, use both 'category' and 'color' to determine available price ranges
@@ -86,14 +85,14 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function nextStep() {
-    if (currentStep < 3) {
+    if (( selectedCategoryValue !== null && currentStep ===0 ) || ( selectedColorValue !== null && currentStep ===1 ) || ( selectedPriceValue !== null && currentStep ===2 )) {
       currentStep++
       setStep(currentStep)
     }
   }
 
   function previousStep() {
-    if (currentStep > 0) {
+    if (selectedCategoryValue !== null &&  currentStep > 0) {
       currentStep--
       setStep(currentStep)
     }
@@ -101,18 +100,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function redirectToProductPage() {
     // Construct the URL with the selections
-    let productUrl = 'product.html'
-    productUrl += `?category=${selections.category}`
-    productUrl += `&color=${selections.color}`
-    productUrl += `&price=${selections.price}`
 
+    //todo: loading css verilecek
+    document.querySelector('#steps').innerHTML = "LOADİNG.."
+    let productUrl = 'product.html'
+    let query =  document.location.search
+   
+    productUrl += query
     window.location.href = productUrl
   }
 
   // Initialize the step views
   initializeSteps()
-
-  // Attach click event listeners to the next and back buttons
-  document.getElementById('nextButton').addEventListener('click', nextStep)
-  document.getElementById('backButton').addEventListener('click', previousStep)
+     // Attach click event listeners to the next and back buttons
+    document.getElementById('nextButton').addEventListener('click', nextStep)
+    document.getElementById('backButton').addEventListener('click', previousStep)
 })

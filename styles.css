@@ -214,19 +214,9 @@ body {
 
 /* product.css */
 .containerProduct {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
   text-align: center;
 }
 
-#product {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
-}
 
 #viewProduct {
   padding: 13px 80px;
@@ -247,7 +237,7 @@ body {
   background-color: #fff;
 }
 
-.title {
+.product {
   margin-bottom: 15px;
 }
 
