@@ -19,7 +19,7 @@ body {
 
 #question h3,
 .color h3,
-.price h3 {
+.priceTitle h3 {
   font-weight: bold;
   text-align: center;
   margin: 0;
@@ -94,7 +94,7 @@ body {
 
 #backButton:hover,
 #nextButton:hover {
-  background-color: #808080;
+  background-color: #000;
   color: #fff;
 }
 
@@ -126,7 +126,7 @@ body {
 
 #categoryForm input:hover {
   color: #fff;
-  background-color: #808080;
+  background-color: #000;
 }
 
 #categoryForm input:active {
@@ -134,31 +134,14 @@ body {
   background-color: #000;
 }
 
-.dots {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-}
-
-.dot {
-  width: 40px;
-  height: 5px;
-  background-color: #ccc;
-  border-radius: 10px;
-  display: inline-block;
-  margin: 0 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-}
-
-#priceForm {
+#form3 {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   justify-content: space-around;
 }
 
-#price {
+.price {
   flex-basis: 45%;
   padding: 15px;
   border: 1px solid #000;
@@ -166,22 +149,17 @@ body {
   cursor: pointer;
 }
 
-#price:hover {
-  color: #fff;
-  background-color: #808080;
-}
-
-#price:active {
+.price:active {
   color: #fff;
   background-color: #000;
 }
 
-#inputRadio {
-  padding: 10px;
-  font-size: 16px;
-  border: 2px solid #0044cc;
-  background-color: #ccddff;
-  color: #003366;
+.text-red {
+  color: red;
+}
+
+.text-gray {
+  color: rgb(168, 164, 164);
 }
 
 #colorForm {
@@ -192,40 +170,83 @@ body {
   justify-content: center;
 }
 
-.text-red {
-  color: red;
-}
-
 .color-button {
   width: 40px;
   height: 40px;
   margin: 10px;
   cursor: pointer;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
   border-radius: 30px;
   position: relative;
-  background-clip: padding-box;
-  transition: transform 0.3s ease;
+  background-clip: content-box;
+  padding: 4px; /* bu, çerçeve ve renk arasındaki boşluğu oluşturur */
+  box-sizing: border-box;
+  transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
 .color-button:hover {
   transform: scale(1.2);
 }
 
-/* product.css */
-.containerProduct {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  text-align: center;
+.color-button:focus {
+  border-color: #000; /* iç çerçeve rengi */
 }
 
-#product {
+.color-button:focus::before {
+  content: '\2713'; /* tik işareti */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff; /* tik işaretinin rengi */
+  font-size: 20px;
+}
+
+.loading-message {
+  font-size: 12px;
+  color: #fff;
+  background-color: #000;
+  border: 1px solid #000;
+  border-radius: 20px;
+  text-align: center;
+  padding: 8px 45px;
+}
+
+/* product.css */
+
+.containerProduct {
+  font-family: Arial, sans-serif; /* İstediğiniz başka bir yazı tipi kullanabilirsiniz */
+  background-color: #f5f5f5; /* Arka plan rengi */
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.productInfo {
   display: flex;
   align-items: center;
-  margin-bottom: 40px;
+  justify-content: center;
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.product img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 20px;
 }
 
 #viewProduct {
@@ -235,10 +256,10 @@ body {
   cursor: pointer;
   border: 1px solid #000;
   border-radius: 20px;
+  transition: background-color 0.3s ease-in-out;
 }
 
 #viewProduct:hover {
-  color: #fff;
   background-color: #808080;
 }
 
@@ -247,33 +268,47 @@ body {
   background-color: #fff;
 }
 
-.title {
-  margin-bottom: 15px;
+.swiper {
+  width: 100%;
+  height: auto;
 }
 
-.dotsProduct {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
+.swiper-button-prev,
+.swiper-button-next {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
 }
 
-.dotProduct {
-  width: 24px;
-  height: 3px;
-  background-color: #ccc;
-  border-radius: 10px;
-  display: inline-block;
-  margin: 0 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
+.swiper-button-prev {
+  left: -60px;
+}
+.swiper-button-next {
+  right: -60px;
 }
 
-#backButtonProduct,
-#nextButtonProduct {
-  font-size: large;
-  padding: 20px 30px;
-  border: none;
-  color: black;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  font-size: 20px;
+}
+
+.swiper-pagination {
+  bottom: 10px;
+}
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: #000;
+  opacity: 0.7;
+}
+
+.swiper-pagination-bullet-active {
+  background: #000;
+  opacity: 1;
 }
