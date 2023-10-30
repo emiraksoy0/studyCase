@@ -136,5 +136,3 @@ function changeStep(direction) {
     displayStepsForCategory(step1Data)
   }
 }
-
-//-----------------------------------
