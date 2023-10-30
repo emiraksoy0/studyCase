@@ -7,55 +7,54 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function initializeSteps() {
-    // Initially hide all steps except the first
+    const dots = document.querySelectorAll('.dot')
+    step === 0 ? dots[0].classList.add('active') : ''
     document.querySelectorAll('.step').forEach((elem, index) => {
       elem.style.display = index === 0 ? 'block' : 'none'
     })
-
-    // Initialize the first step's content here if necessary
   }
 
   function generateStepContent() {
-    // Based on the current step and previous selections, generate the appropriate content
-    // For example, if on step 2, use the 'category' selection to determine what colors to show
+    const dots = document.querySelectorAll('.dot')
+    dots.forEach((dot) => dot.classList.remove('active'))
+    for (let i = 0; i <= currentStep; i++) {
+      currentStep !== 3 ? dots[i].classList.add('active') : ''
+    }
+
     if (currentStep === 1 && selectedColorValue !== null) {
-      // assuming 0-index, this is step 2
-      const colors = getColorsForCategory(selections.category) // define this function to return an array of colors based on the category
-      // Add these colors to the form, e.g., by creating buttons or other input elements as needed
-      // You might need to clear the existing form content first
+      //step 2 color aşaması
+
+      const colors = getColorsForCategory(selections.category)
 
       const form = document.getElementById('form2')
-      form.innerHTML = '' // Clear existing content
+      form.innerHTML = ''
 
       colors.forEach((color) => {
         const button = document.createElement('button')
-        button.type = 'button' // prevent form submission
+        button.type = 'button'
         button.textContent = color
         button.value = color
         button.addEventListener('click', function () {
-          selections.color = color // update selection
+          selections.color = color
           nextStep()
         })
         form.appendChild(button)
       })
     } else if (currentStep === 2 && selectedPriceValue !== null) {
-      // this is step 3
-      // Similar to above, use the selections to determine what content to generate
-      // For example, use both 'category' and 'color' to determine available price ranges
+      //step 3 price aşaması
 
-      const prices = getPriceRangesForSelections(selections) // define this function based on your logic
-      // Add these prices to the form in a similar way as the colors above
+      const prices = getPriceRangesForSelections(selections)
 
       const form = document.getElementById('form3')
-      form.innerHTML = '' // Clear existing content
+      form.innerHTML = ''
 
       prices.forEach((price) => {
         const button = document.createElement('button')
-        button.type = 'button' // prevent form submission
+        button.type = 'button'
         button.textContent = price
         button.value = price
         button.addEventListener('click', function () {
-          selections.price = price // update selection
+          selections.price = price
           nextStep()
         })
         form.appendChild(button)
@@ -64,21 +63,17 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function setStep(step) {
-    // Hide all steps
     document.querySelectorAll('.step').forEach((elem) => {
       elem.style.display = 'none'
     })
 
-    // Show the current step
     const stepElem = document.getElementById(`step${step + 1}`)
     if (stepElem) {
       stepElem.style.display = 'block'
     }
 
-    // Generate content for the current step based on selections
     generateStepContent()
 
-    // If we're past the last step, redirect to the product page
     if (step >= 3) {
       redirectToProductPage()
     }
@@ -103,24 +98,83 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function redirectToProductPage() {
-    // Construct the URL with the selections
-
-    //todo: loading css verilecek
-    document.querySelector('#steps').innerHTML = 'LOADING..'
-
-    const stepsElement = document.querySelector('#steps')
-    stepsElement.innerHTML = 'LOADING...'
-    stepsElement.className = ' loading-message' // Add the class
-    let productUrl = 'product.html'
-    let query = document.location.search
-
-    productUrl += query
-    window.location.href = productUrl
+    fetchProducts()
   }
 
-  // Initialize the step views
   initializeSteps()
-  // Attach click event listeners to the next and back buttons
+
+  function filterProducts(data) {
+    const urlParams = new URLSearchParams(window.location.search)
+
+    const query_category = urlParams.get('category')?.toLowerCase() || ''
+    const query_color = urlParams.get('color')?.toLowerCase() || ''
+    const query_priceRange = urlParams.get('price')?.split('-') || []
+    const query_minPrice = Number(query_priceRange[0]) || 0
+    const query_maxPrice =
+      Number(query_priceRange[1]) || Number.MAX_SAFE_INTEGER
+    const isMobile = window.innerWidth <= 768 ? 7 : 15
+
+    return data
+      .filter((product) => {
+        const categoryMatch = product.category.some((cat) =>
+          cat.toLowerCase().includes(query_category)
+        )
+        const colorMatch = query_color
+          ? product.colors.some((color) =>
+              color.toLowerCase().includes(query_color)
+            )
+          : true
+        const priceMatch =
+          product.price >= query_minPrice && product.price <= query_maxPrice
+
+        return categoryMatch && colorMatch && priceMatch
+      })
+      .slice(0, isMobile)
+  }
+
+  async function fetchProducts() {
+    try {
+      const response = await fetch('../json/products.json')
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok')
+      }
+
+      const data = await response.json()
+      const filteredProducts = filterProducts(data)
+      if (filteredProducts.length > 0) {
+        localStorage.setItem(
+          'filteredProducts',
+          JSON.stringify(filteredProducts)
+        )
+
+        document.querySelector('#steps').innerHTML = 'LOADING..'
+
+        const stepsElement = document.querySelector('#steps')
+        stepsElement.innerHTML = 'LOADING...'
+        stepsElement.className = ' loading-message'
+        let productUrl = 'product.html'
+        let query = document.location.search
+
+        productUrl += query
+        window.location.href = productUrl
+      } else {
+        displayNoProductsFound()
+      }
+    } catch (error) {
+      console.error('Fetch error:', error)
+    }
+  }
+
+  function displayNoProductsFound() {
+    //  localStorage'dan önceki products'ı sil
+    localStorage.removeItem('filteredProducts')
+
+    document.querySelector('#steps').innerHTML = `
+      <div id="product" class="product swiper-slide">
+        <h3>Products Not Found.</h3>
+      </div>`
+  }
   document.getElementById('nextButton').addEventListener('click', nextStep)
   document.getElementById('backButton').addEventListener('click', previousStep)
 })

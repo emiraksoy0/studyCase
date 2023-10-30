@@ -64,7 +64,7 @@ function updateStep() {
   const stepData = currentCategorySteps[step]
   const stepElem = document.getElementById(`step${step + 1}`)
   stepElem.querySelector('.subTitle').innerHTML = `
-  <div class="text-gray"><h4>${stepData.subtitle}</h4></div>
+  <div class="text-grey"><h4>${stepData.subtitle}</h4></div>
   <h3>${stepData.title}</h3>`
 
   let formContent = ''
@@ -95,8 +95,12 @@ function updateStep() {
   priceElements.forEach((element) => {
     element.addEventListener('click', function (event) {
       event.preventDefault()
+      priceElements.forEach((cat) => {
+        cat.classList.remove('active-button')
+      })
+
       selectedPriceValue = event.target.value
-      console.log(selectedPriceValue)
+      event.currentTarget.classList.add('active-button')
     })
   })
 }
@@ -132,7 +136,6 @@ function changeStep(direction) {
     const step1Data = questionData.find(
       (item) => item.name === selectedCategoryValue
     )
-    console.log(step)
     displayStepsForCategory(step1Data)
   }
 }

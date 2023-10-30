@@ -1,92 +1,52 @@
-async function fetchProducts() {
-  try {
-    const response = await fetch('../json/products.json')
+document.addEventListener('DOMContentLoaded', () => {
+  const products = JSON.parse(localStorage.getItem('filteredProducts') || '[]')
 
-    if (!response.ok) {
-      throw new Error('Network response was not ok')
-    }
-
-    const data = await response.json()
-    const filteredProducts = filterProducts(data)
-    filteredProducts.length > 0
-      ? displayProducts(filteredProducts)
-      : displayNoProductsFound()
-  } catch (error) {
-    console.error('Fetch error:', error)
-  }
-}
-
-function filterProducts(data) {
-  const urlParams = new URLSearchParams(window.location.search)
-
-  const query_category = urlParams.get('category')?.toLowerCase() || ''
-  const query_color = urlParams.get('color')?.toLowerCase() || ''
-  const query_priceRange = urlParams.get('price')?.split('-') || []
-  const query_minPrice = Number(query_priceRange[0]) || 0
-  const query_maxPrice = Number(query_priceRange[1]) || Number.MAX_SAFE_INTEGER
-
-  return data
-    .filter((product) => {
-      const categoryMatch = product.category.some((cat) =>
-        cat.toLowerCase().includes(query_category)
+  function displayProducts(products) {
+    let productElements = products
+      .map(
+        (product) => `
+      <div id="product" class="product swiper-slide">
+        <img src=${
+          product.image
+        } alt="product-image" loading="lazy" class="swiper-lazy" />
+        <h3 class="product-title">${product.name}</h3>
+        ${
+          product.oldPrice
+            ? `<h4>${product.currency}${product.oldPrice}</h4>
+            <h4 class="text-red">${product.currency}${product.price}</h4>`
+            : `<h4>${product.currency}${product.price}</h4><br/>`
+        }
+        <div class="viewProduct">
+          <button id="viewProduct">VIEW PRODUCT</button>
+        </div>
+      </div>`
       )
-      const colorMatch = query_color
-        ? product.colors.some((color) =>
-            color.toLowerCase().includes(query_color)
-          )
-        : true
-      const priceMatch =
-        product.price >= query_minPrice && product.price <= query_maxPrice
+      .join('')
 
-      return categoryMatch && colorMatch && priceMatch
+    document.querySelector('.productInfo').innerHTML = productElements
+    initializeSwiper()
+  }
+
+  function initializeSwiper() {
+    new Swiper('.swiper', {
+      pagination: {
+        el: '.swiper-pagination',
+      },
+      lazy: true,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
     })
-    .slice(0, 20)
-}
 
-function displayProducts(products) {
-  let productElements = products
-    .map(
-      (product) => `
-    <div id="product" class="product swiper-slide">
-      <img src=${
-        product.image
-      } alt="product-image" loading="lazy" class="swiper-lazy" />
-      <h3>${product.name}</h3>
-      ${
-        product.oldPrice
-          ? `<h4>${product.currency} ${product.oldPrice}</h4>
-           <h4 class="text-red">${product.currency} ${product.price}</h4>`
-          : `<h4>${product.currency} ${product.price}</h4>`
-      }
-      <div class="viewProduct">
-        <button id="viewProduct">VIEW PRODUCT</button>
-      </div>
-    </div>`
-    )
-    .join('')
+    // DOM'dan belirli span'ları seç
+    let spanElements = document.querySelectorAll('.swiper-pagination-bullet')
 
-  document.querySelector('.productInfo').innerHTML = productElements
-  initializeSwiper()
-}
+    // Her birine 'dot' sınıfını ekleyin
+    spanElements.forEach(function (span) {
+      span.classList.add('dot')
+    })
+  }
 
-function displayNoProductsFound() {
-  document.querySelector('.productInfo').innerHTML = `
-    <div id="product" class="product swiper-slide">
-      <h3>Products Not Found.</h3>
-    </div>`
-}
-
-function initializeSwiper() {
-  new Swiper('.swiper', {
-    pagination: {
-      el: '.swiper-pagination',
-    },
-    lazy: true,
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-  })
-}
-
-fetchProducts()
+  displayProducts(products)
+})

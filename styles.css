@@ -6,6 +6,11 @@
 body {
   font-family: 'Arial', sans-serif;
   line-height: 1.6;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container {
@@ -158,7 +163,7 @@ body {
   color: red;
 }
 
-.text-gray {
+.text-grey {
   color: rgb(168, 164, 164);
 }
 
@@ -170,6 +175,29 @@ body {
   justify-content: center;
 }
 
+.dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.dot {
+  width: 40px !important;
+  height: 5px !important;
+  background-color: #ccc !important;
+  border-radius: 10px !important;
+  display: inline-block !important;
+  margin: 0 5px !important;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+.dot.active {
+  background-color: #776b6b !important;
+}
+
+.swiper-pagination.swiper-pagination-bullets {
+  bottom: -5%;
+}
 .color-button {
   width: 40px;
   height: 40px;
@@ -179,7 +207,7 @@ body {
   border-radius: 30px;
   position: relative;
   background-clip: content-box;
-  padding: 4px; /* bu, çerçeve ve renk arasındaki boşluğu oluşturur */
+  padding: 4px;
   box-sizing: border-box;
   transition: transform 0.3s ease, border-color 0.3s ease;
 }
@@ -189,15 +217,15 @@ body {
 }
 
 .color-button:focus {
-  border-color: #000; /* iç çerçeve rengi */
+  border-color: #000;
 }
 
 .color-button:focus::before {
-  content: '\2713'; /* tik işareti */
+  content: '\2713';
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #fff; /* tik işaretinin rengi */
+  color: #fff;
   font-size: 20px;
 }
 
@@ -213,21 +241,25 @@ body {
 
 /* product.css */
 
+div#product-container {
+  height: 85vh;
+}
+.viewProduct {
+  margin: 25px;
+}
 .containerProduct {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  text-align: center;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
 }
 
-#product {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
+.swiper-pagination.swiper-pagination-bullets {
+  bottom: -10px;
 }
 
+/* Buton Stili */
 #viewProduct {
   padding: 13px 80px;
   background-color: #000;
@@ -246,45 +278,44 @@ body {
   color: #000;
   background-color: #fff;
 }
-
-.title {
-  margin-bottom: 15px;
+.swiper-slide {
+  text-align: center;
 }
 
-.dotsProduct {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
+/* Varsayılan ok stilini sıfırlama */
+.swiper-button-prev,
+.swiper-button-next {
+  width: auto !important;
+  height: auto !important;
+  background: none !important;
 }
 
-.dotProduct {
-  width: 24px;
-  height: 3px;
-  background-color: #ccc;
-  border-radius: 10px;
-  display: inline-block;
-  margin: 0 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  font-size: 30px !important;
+  color: #000 !important;
+  content: '⟵' !important;
 }
 
-.swiper-button-prev:after,
-.swiper-button-next:after {
-  font-size: 20px;
+.swiper-button-next::after {
+  content: '⟶' !important;
 }
 
-.swiper-pagination {
-  bottom: 10px;
-}
+/* responsive design */
+@media screen and (max-width: 768px) {
+  #viewProduct {
+    display: none;
+  }
 
-.swiper-pagination-bullet {
-  width: 10px;
-  height: 10px;
-  background: #000;
-  opacity: 0.7;
-}
+  img.swiper-lazy {
+    width: 70%;
+  }
 
-.swiper-pagination-bullet-active {
-  background: #000;
-  opacity: 1;
+  h3.product-title {
+    margin: 30px;
+    font-size: 15px;
+  }
+  div#product-container {
+    height: 75vh;
+  }
 }
